@@ -1,8 +1,8 @@
-# 🛡️ TruthTrace: Suspicious Evidence Detection System
+#  TruthTrace: Suspicious Evidence Detection System
 
 TruthTrace is a digital forensic web application designed to verify the integrity of images and documents. It helps detect if a file has been tampered with or edited by analyzing its metadata and digital fingerprint.
 
-## 🚀 Key Features
+##  Key Features
 - **File Integrity Check:** Generates a unique SHA-512 hash for every uploaded file.
 - **Metadata Analysis:** Scans for hidden EXIF data and editing software traces.
 - **Tamper Detection:** Flags files with missing metadata or inconsistent timestamps.
@@ -10,10 +10,10 @@ TruthTrace is a digital forensic web application designed to verify the integrit
 
 ---
 
-## 👥 Team Roles & Responsibilities
+##  Team Roles & Responsibilities
 
 ### **Member 1: Project Lead & Security Architect**
-**Status: COMPLETED ✅**
+**Status: COMPLETED **
 - Set up the **Flask framework** and core project structure.
 - Implemented **SHA-512 Hashing** for digital integrity verification.
 - Developed the **Main Backend Engine** and Routing.
@@ -26,20 +26,20 @@ TruthTrace is a digital forensic web application designed to verify the integrit
 - Identifying software traces (Photoshop, Canva, etc.).
 
 ### **Member 3: UI/UX & Auth Lead**
-**Status: IN PROGRESS ⏳**
+**Status: IN PROGRESS **
 - Developing the **User Authentication** system (Login/Register).
 - Managing the **SQLite Database** for user records.
 - Refining the **Result Dashboard** for detailed analysis reports.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 - **Backend:** Python (Flask)
 - **Frontend:** HTML5, CSS3 (Modern Dark Theme)
 - **Database:** SQLite
 - **Libraries:** Pillow, Hashlib, Flask-WTF
 
-## ⚙️ How to Setup and Run
+##  How to Setup and Run
 
 To get this project running on your local machine, follow these steps in your terminal:
 
