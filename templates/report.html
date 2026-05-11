@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: #10b981;">✔ Integrity Verified</h2>
+        <div style="text-align: left;">
+            <p><strong>File:</strong> {{ filename }}</p>
+            <p><strong>Digital Fingerprint (SHA-512):</strong></p>
+            <div class="hash-box">{{ file_hash }}</div>
+        </div>
+        <br>
+        <a href="/"><button>Analyze Another File</button></a>
+    </div>
+</body>
+</html>

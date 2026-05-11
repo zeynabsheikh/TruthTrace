@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TruthTrace - Secure Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>🛡️ TruthTrace</h2>
+        <p>Evidence Analysis System</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="upload-box">
+                <input type="file" name="file" required>
+            </div>
+            <button type="submit">Analyze Evidence</button>
+        </form>
+    </div>
+</body>
+</html>
