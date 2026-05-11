@@ -13,20 +13,17 @@ TruthTrace is a digital forensic web application designed to verify the integrit
 ##  Team Roles & Responsibilities
 
 ### **Member 1: Project Lead & Security Architect**
-**Status: COMPLETED **
 - Set up the **Flask framework** and core project structure.
 - Implemented **SHA-512 Hashing** for digital integrity verification.
 - Developed the **Main Backend Engine** and Routing.
 - Designed the **Modern Dark UI** for Upload and Report pages.
 
 ### **Member 2: Forensic Logic Analyst**
-**Status: IN PROGRESS ⏳**
 - Developing the **Metadata Extraction** module using Pillow.
 - Implementing the **Suspicion Scoring** logic.
 - Identifying software traces (Photoshop, Canva, etc.).
 
 ### **Member 3: UI/UX & Auth Lead**
-**Status: IN PROGRESS **
 - Developing the **User Authentication** system (Login/Register).
 - Managing the **SQLite Database** for user records.
 - Refining the **Result Dashboard** for detailed analysis reports.
