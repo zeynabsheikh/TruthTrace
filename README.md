@@ -18,7 +18,7 @@ TruthTrace is a digital forensic web application designed to verify the integrit
 - Developed the **Main Backend Engine** and Routing.
 - Designed the **Modern Dark UI** for Upload and Report pages.
 
-### **Member 2: Forensic Logic Analyst**
+### **Member 2 (Aiza Khurram): Forensic Logic Analyst**
 - Developing the **Metadata Extraction** module using Pillow.
 - Implementing the **Suspicion Scoring** logic.
 - Identifying software traces (Photoshop, Canva, etc.).
