@@ -6,14 +6,17 @@
 </head>
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>TruthTrace</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h2>🛡️ TruthTrace</h2>
             <div>
-                <span>{{ current_user.username }}</span>
+                <span style="color: #38bdf8;">👤 {{ current_user.username }}</span>
+                <a href="{{ url_for('dashboard') }}" style="color: #10b981; margin-left: 15px;">Dashboard</a>
                 <a href="{{ url_for('logout') }}" style="color: #ef4444; margin-left: 15px;">Logout</a>
             </div>
         </div>
-        <p>Evidence Analysis System</p>
+        
+        <p style="color: #94a3b8; margin: 10px 0 20px 0;">Suspicious Evidence Detection System</p>
+        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -21,15 +24,29 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+        
         <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            
             <div class="upload-box">
-                <input type="file" name="file" required>
+                <p style="margin-bottom: 15px;"> Select Evidence File</p>
+                <input type="file" name="file" required accept=".png,.jpg,.jpeg,.pdf,.docx,.txt,.gif,.bmp">
+                <p style="font-size: 0.8em; color: #94a3b8; margin-top: 10px;">
+                     Allowed: PNG, JPG, JPEG, GIF, BMP (Images)<br>
+                     PDF Documents | DOCX (Word) | TXT (Text)<br>
+                     Max size: 50MB
+                </p>
             </div>
-            <button type="submit">Analyze Evidence</button>
+            
+            <button type="submit">🔍 Analyze Evidence</button>
         </form>
-        <p style="margin-top: 15px;">
-            <a href="{{ url_for('dashboard') }}" style="color: #38bdf8;">View Dashboard</a>
-        </p>
+        
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #334155;">
+            <p style="font-size: 0.8em; color: #64748b;">
+                Your files are secured with SHA-512 hashing<br>
+                Forensic analysis includes metadata, editing software, and content checks
+            </p>
+        </div>
     </div>
 </body>
 </html>

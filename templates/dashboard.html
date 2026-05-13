@@ -1,51 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Dashboard - TruthTrace</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container" style="width: 80%; max-width: 1000px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>Dashboard</h2>
-            <div>
-                <span>Welcome, {{ current_user.username }}</span>
-                <a href="{{ url_for('logout') }}" style="color: #ef4444; margin-left: 15px;">Logout</a>
-            </div>
-        </div>
 
-        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #334155;">
-            <h3 style="color: #38bdf8;">Quick Actions</h3>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h2>🛡️ TruthTrace Dashboard</h2>
+                <p style="color: #94a3b8;">
+                    Welcome, {{ current_user.username }}
+                </p>
+            </div>
+
+            <div>
                 <a href="{{ url_for('home') }}" style="text-decoration: none;">
-                    <button style="width: auto; padding: 10px 20px;">Upload New File</button>
+                    <button type="button"
+                        style="width: auto; padding: 10px 20px; background-color: #10b981;">
+                        + Upload New
+                    </button>
+                </a>
+
+                <a href="{{ url_for('logout') }}" style="text-decoration: none;">
+                    <button type="button"
+                        style="width: auto; padding: 10px 20px; background-color: #ef4444; margin-left: 10px;">
+                        Logout
+                    </button>
                 </a>
             </div>
         </div>
 
-        <div style="margin: 20px 0;">
-            <h3 style="color: #38bdf8;">Recent Analyses</h3>
-            <div style="background: #0f172a; border-radius: 8px; border: 1px solid #334155; padding: 15px;">
-                {% if history %}
-                    {% for item in history %}
-                    <div style="border-bottom: 1px solid #334155; padding: 10px 0;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-weight: bold;">{{ item.filename }}</span>
-                            <span>Score: {{ item.suspicion_score }}/100</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #94a3b8;">
-                            <span>{{ item.analysis_date.strftime('%Y-%m-%d %H:%M') }}</span>
-                            <span style="color: {% if item.status == 'SUSPICIOUS' %}#ef4444{% elif item.status == 'POSSIBLY EDITED' %}#f59e0b{% else %}#10b981{% endif %};">
-                                {{ item.status }}
-                            </span>
-                        </div>
-                    </div>
-                    {% endfor %}
-                {% else %}
-                    <p style="color: #94a3b8;">No analyses performed yet.</p>
-                {% endif %}
+        <!-- Statistics -->
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #334155;">
+            <h3 style="color: #38bdf8;">📊 Your Statistics</h3>
+
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+
+                <!-- Total -->
+                <div style="background: #1e293b; padding: 10px 20px; border-radius: 8px;">
+                    <span style="color: #94a3b8;">Total Analyses:</span>
+                    <span style="font-size: 24px; font-weight: bold; color: #38bdf8; margin-left: 10px;">
+                        {{ history|length }}
+                    </span>
+                </div>
+
+                <!-- Suspicious -->
+                <div style="background: #1e293b; padding: 10px 20px; border-radius: 8px;">
+                    <span style="color: #94a3b8;">Suspicious Files:</span>
+                    <span style="font-size: 24px; font-weight: bold; color: #ef4444; margin-left: 10px;">
+                        {{ history | selectattr("status", "equalto", "SUSPICIOUS") | list | length }}
+                    </span>
+                </div>
+
+                <!-- Clean -->
+                <div style="background: #1e293b; padding: 10px 20px; border-radius: 8px;">
+                    <span style="color: #94a3b8;">Clean Files:</span>
+                    <span style="font-size: 24px; font-weight: bold; color: #10b981; margin-left: 10px;">
+                        {{ history | selectattr("status", "equalto", "CLEAN") | list | length }}
+                    </span>
+                </div>
+
             </div>
         </div>
+
+        <!-- Recent Analyses -->
+        <div style="margin: 20px 0;">
+            <h3 style="color: #38bdf8;">📋 Recent Forensic Analyses</h3>
+
+            <div style="background: #0f172a; border-radius: 8px; border: 1px solid #334155; overflow-x: auto;">
+
+                {% if history and history|length > 0 %}
+
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid #334155; background: #1e293b;">
+                            <th style="padding: 12px; text-align: left;">File Name</th>
+                            <th style="padding: 12px; text-align: left;">Date</th>
+                            <th style="padding: 12px; text-align: center;">Score</th>
+                            <th style="padding: 12px; text-align: center;">Status</th>
+                            <th style="padding: 12px; text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in history %}
+
+                            {% if item.status == "SUSPICIOUS" %}
+                                {% set status_color = "#ef4444" %}
+                            {% elif item.status == "POSSIBLY EDITED" %}
+                                {% set status_color = "#f59e0b" %}
+                            {% else %}
+                                {% set status_color = "#10b981" %}
+                            {% endif %}
+
+                            <tr style="border-bottom: 1px solid #334155;">
+
+                                <!-- Filename -->
+                                <td style="padding: 12px;">
+                                    <span style="font-family: monospace; font-size: 0.9em;">
+                                        {{ item.filename[:30] }}
+                                        {% if item.filename|length > 30 %}...{% endif %}
+                                    </span>
+                                </td>
+
+                                <!-- Date -->
+                                <td style="padding: 12px; color: #94a3b8;">
+                                    {% if item.analysis_date %}
+                                        {{ item.analysis_date.strftime('%Y-%m-%d %H:%M') }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+
+                                <!-- Score -->
+                                <td style="padding: 12px; text-align: center;">
+                                    {{ item.suspicion_score }}/100
+                                </td>
+
+                                <!-- Status -->
+                                <td style="padding: 12px; text-align: center;">
+                                    <span style="color: {{ status_color }}; font-weight: bold;">
+                                        {{ item.status }}
+                                    </span>
+                                </td>
+
+                                <!-- Action -->
+                                <td style="padding: 12px; text-align: center;">
+                                    <a href="{{ url_for('view_analysis', analysis_id=item.id) }}"
+                                       style="color: #38bdf8;">
+                                        View Report
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+                {% else %}
+
+                <p style="padding: 30px; text-align: center; color: #94a3b8;">
+                    No analyses performed yet.
+                    <a href="{{ url_for('home') }}" style="color: #38bdf8;">
+                        Upload your first file
+                    </a>
+                </p>
+
+                {% endif %}
+
+            </div>
+        </div>
+
     </div>
 </body>
 </html>

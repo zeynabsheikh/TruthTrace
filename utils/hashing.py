@@ -1,7 +1,7 @@
 import hashlib
 
 def generate_file_hash(file_path):
-    # Standard SHA-512 hashing for file integrity
+    """Generate SHA-512 hash of a file for integrity verification"""
     sha512_hash = hashlib.sha512()
     try:
         with open(file_path, "rb") as f:
