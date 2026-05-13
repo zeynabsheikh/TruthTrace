@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Analysis Report</title>
+    <title>Analysis Report - TruthTrace</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h2 style="color: #10b981;">✔ Integrity Verified</h2>
+        <h2 style="color: {% if status == 'SUSPICIOUS' %}#ef4444{% elif status == 'POSSIBLY EDITED' %}#f59e0b{% else %}#10b981{% endif %};">
+            {% if status == 'SUSPICIOUS' %}Suspicious{% elif status == 'POSSIBLY EDITED' %}Possibly Edited{% else %}Clean{% endif %}
+        </h2>
         <div style="text-align: left;">
             <p><strong>File:</strong> {{ filename }}</p>
+            <p><strong>Suspicion Score:</strong> {{ suspicion_score }}/100</p>
+            <p><strong>Status:</strong> {{ status }}</p>
+
             <p><strong>Digital Fingerprint (SHA-512):</strong></p>
             <div class="hash-box">{{ file_hash }}</div>
+
+            <p><strong>Forensic Findings:</strong></p>
+            <div style="background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155;">
+                {% if forensic_findings %}
+                    <ul>
+                    {% for finding in forensic_findings %}
+                        <li>{{ finding }}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="color: #10b981;">No suspicious findings detected</p>
+                {% endif %}
+            </div>
         </div>
         <br>
         <a href="/"><button>Analyze Another File</button></a>
