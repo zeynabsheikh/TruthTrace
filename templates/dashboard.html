@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - TruthTrace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container" style="width: 80%; max-width: 1000px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Dashboard</h2>
+            <div>
+                <span>Welcome, {{ current_user.username }}</span>
+                <a href="{{ url_for('logout') }}" style="color: #ef4444; margin-left: 15px;">Logout</a>
+            </div>
+        </div>
 
+        <div style="margin: 20px 0; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #334155;">
+            <h3 style="color: #38bdf8;">Quick Actions</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="{{ url_for('home') }}" style="text-decoration: none;">
+                    <button style="width: auto; padding: 10px 20px;">Upload New File</button>
+                </a>
+            </div>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <h3 style="color: #38bdf8;">Recent Analyses</h3>
+            <div style="background: #0f172a; border-radius: 8px; border: 1px solid #334155; padding: 15px;">
+                {% if history %}
+                    {% for item in history %}
+                    <div style="border-bottom: 1px solid #334155; padding: 10px 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-weight: bold;">{{ item.filename }}</span>
+                            <span>Score: {{ item.suspicion_score }}/100</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #94a3b8;">
+                            <span>{{ item.analysis_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                            <span style="color: {% if item.status == 'SUSPICIOUS' %}#ef4444{% elif item.status == 'POSSIBLY EDITED' %}#f59e0b{% else %}#10b981{% endif %};">
+                                {{ item.status }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: #94a3b8;">No analyses performed yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
