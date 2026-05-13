@@ -1,0 +1,8 @@
+echo "__pycache__/" >> .gitignore
+echo "uploads/*" >> .gitignore
+echo "instance/" >> .gitignore
+echo "*.pyc" >> .gitignore
+
+# Phir gitignore ko bhi add karo
+git add .gitignore
+git commit -m "Added .gitignore to exclude temporary files"
