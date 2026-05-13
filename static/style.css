@@ -5,8 +5,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
 }
 
 .container {
@@ -15,11 +16,14 @@ body {
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     width: 500px;
+    max-width: 100%;
     text-align: center;
     border: 1px solid #334155;
 }
 
-h2 { color: #38bdf8; }
+h2 {
+    color: #38bdf8;
+}
 
 .upload-box {
     border: 2px dashed #334155;
@@ -47,4 +51,38 @@ button {
     font-weight: bold;
     cursor: pointer;
     width: 100%;
+}
+
+button:hover {
+    background-color: #0ea5e9;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    background: #0f172a;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.alert-success {
+    background: #10b981;
+    color: white;
+}
+
+.alert-error {
+    background: #ef4444;
+    color: white;
+}
+
+a {
+    text-decoration: none;
 }
