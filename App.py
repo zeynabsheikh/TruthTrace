@@ -1,21 +1,23 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash
 import os
 from utils.hashing import generate_file_hash
+from utils.forensic import ForensicAnalyzer
 
 app = Flask(__name__)
-app.secret_key = "infosec_secret_key"
+app.config['SECRET_KEY'] = 'infosec_secret_key_secure_2024'
 
 UPLOAD_FOLDER = 'uploads'
-# Only allow specific file types for security
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf', 'docx'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Initialize forensic analyzer (Member 2)
+forensic_analyzer = ForensicAnalyzer()
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 def allowed_file(filename):
-    # Security check: Does the file have an allowed extension?
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
@@ -25,30 +27,34 @@ def home():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-        return "No file selected"
-    
-    file = request.files['file']
-    
-    if file.filename == '':
-        return "No file selected"
+        flash('No file selected', 'error')
+        return redirect(url_for('home'))
 
-    # Security check before saving
+    file = request.files['file']
+
+    if file.filename == '':
+        flash('No file selected', 'error')
+        return redirect(url_for('home'))
+
     if file and allowed_file(file.filename):
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(file_path)
-        
-        # SHA-512 Integrity Check
+
+        # SHA-512 Integrity Check (Member 1)
         file_hash = generate_file_hash(file_path)
-        
-        # NOTE FOR MEMBER 2: 
-        # Your metadata analysis results will be called here.
-        # Example: analysis_results = metadata_checker.check(file_path)
-        
-        return render_template('report.html', 
-                               filename=file.filename, 
-                               file_hash=file_hash)
+
+        # Forensic Analysis (Member 2)
+        forensic_results = forensic_analyzer.analyze_image(file_path)
+
+        return render_template('report.html',
+                               filename=file.filename,
+                               file_hash=file_hash,
+                               forensic_findings=forensic_results.get('findings', []),
+                               suspicion_score=forensic_results.get('score', 0),
+                               status=forensic_results.get('status', 'Unknown'))
     else:
-        return "Security Error: File type not allowed!"
+        flash('Security Error: File type not allowed!', 'error')
+        return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
