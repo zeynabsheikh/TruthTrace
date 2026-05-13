@@ -1,8 +1,56 @@
-echo "__pycache__/" >> .gitignore
-echo "uploads/*" >> .gitignore
-echo "instance/" >> .gitignore
-echo "*.pyc" >> .gitignore
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
 
-# Phir gitignore ko bhi add karo
-git add .gitignore
-git commit -m "Added .gitignore to exclude temporary files"
+# Virtual Environment
+venv/
+env/
+ENV/
+.env
+.venv
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+instance/
+*.db-journal
+
+# Uploads (local testing files)
+uploads/*
+!uploads/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+*.pid
+
+# Flask
+instance/
+.watchdog*
+*.pid
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Secrets
+config.py
+.secret_key
