@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - TruthTrace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div style="margin: 15px 0;">
+                {{ form.username.label }}<br>
+                {{ form.username(class="form-control") }}
+            </div>
+            <div style="margin: 15px 0;">
+                {{ form.password.label }}<br>
+                {{ form.password(class="form-control") }}
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p style="margin-top: 15px;">
+            Don't have an account? <a href="{{ url_for('register') }}" style="color: #38bdf8;">Register</a>
+        </p>
+    </div>
+</body>
+</html>
