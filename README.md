@@ -56,5 +56,6 @@ pip install flask flask-wtf Pillow
   python App.py
   ```
 
-  
+### To open TruthTrace Directly
+- 🔗Link: https://tinyurl.com/TruthTrace
 
